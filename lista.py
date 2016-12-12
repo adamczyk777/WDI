@@ -14,7 +14,7 @@ class Node:
     def __str__(self):
         return str(self.data)
  
-class UnidirectionalList:
+class TwoWayList:
  
     def __init__(self):
         self.head = None
@@ -30,6 +30,17 @@ class UnidirectionalList:
                 n = n.next
             new_node = Node(data)
             n.next = new_node;
+            
+    def addFirst(self, data):
+        
+    def addMiddle(self, data):
+        
+    def removelast(self):
+        
+    def removeFirst(self):
+        
+    def removeMiddle(self):
+        
  
     def printList(self):
         n = self.head
@@ -37,7 +48,7 @@ class UnidirectionalList:
             print (n)
             n = n.next
  
-ll = UnidirectionalList()
+ll = TwoWayList()
 ll.addLast(14)
 ll.addLast("test")
 ll.addLast(2.34)
