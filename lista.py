@@ -1,4 +1,8 @@
-#indeksowanie elementów zacząłem od numeru 1, ze względu na wartości size
+"""
+Indeksowanie elementóœ zaczyna się tak jakby od numeru 1, używane przyd odawaniu na ntej pozycji
+"""
+
+
 class Node:
     def __init__(self, name, score):
         self.name = name
@@ -18,24 +22,26 @@ class BidirectionalList:
 
     def addBeg(self, name, score):
         """
-        dodaje element na początkulisty
-        :param data: dane przekazywane przy dodawaniu elementu (wartosc elementu)
+        Dodaje element na początku listy
+        :param name: imie i nazwisko ucznia
+        :param score: wynik z kolokwium
+        :return: None, nie zwraca nic
         """
         node = Node(name, score)
         if self.tail is None:
-            self.tail = node #jesli brakuje nam wskaznika na ostatni el, ustaiwamy go na ten który dodajemy
+            self.tail = node
         if self.head is None:
-            self.head = node #analogicznie, ale dla pierwszego
+            self.head = node
         else:
-            tmp = self.head #zachowujemy co jest wskazywane przez głowę listy
-            self.head = node # wczucamy w głowę nowy el
-            node.next = tmp #dodajemy wskaznik na to co bylo wczesniej jako pierwszy element w anszym nowym
+            tmp = self.head
+            self.head = node
+            node.next = tmp
             tmp.prev = node
         self.size += 1
 
     def removeBeg(self):
         """
-        usuwa pierwszy element z listy
+        Usuwa początkowy element listy
         """
         if self.size > 1:
             self.head = self.head.next
@@ -50,11 +56,16 @@ class BidirectionalList:
             return False
 
     def addLast(self, name, score):
+        """
+        Dodaje element na koniec listy
+        :param name: Imie i nazwisko studenta/ucznia
+        :param score: wynik z kolokwium
+        """
         node = Node(name, score)
         if self.tail is None:
-            self.tail = node #jesli brakuje nam wskaznika na ostatni el, ustaiwamy go na ten który dodajemy
+            self.tail = node
         if self.head is None:
-            self.head = node #analogicznie, ale dla pierwszego
+            self.head = node
         else:
             tmp = self.tail
             self.tail = node
@@ -64,7 +75,7 @@ class BidirectionalList:
 
     def removeLast(self):
         """
-        usuwa ostatni element z listy
+        Usuwa ostatni element z listy
         """
         if self.size > 1:
             self.tail = self.tail.prev
@@ -80,10 +91,10 @@ class BidirectionalList:
 
     def addN(self, name, score, n):
         """
-        funkcja dodaje element na ntą pozycję
-        :param data: dane jakie chcemy dodać
-        :param n: enty element
-        :return:
+        Dodaje element na N-tą pozycję na liście
+        :param name: Imie i nazwisko studenta/ucznia
+        :param score: wynik z kolokwium
+        :param n: pozycja na liscie
         """
         if 0 < n <= (self.size + 1):
             if n == (self.size + 1):
@@ -112,44 +123,61 @@ class BidirectionalList:
                 self.size += 1
 
     def findBest(self):
+        """
+        ZNajduje najlepszego studenta/ucznia, oraz drukuje jego name
+        """
         if self.size > 0:
             best = self.head
             iterator = self.head
             for x in range(self.size):
-                if iterator.score > best.score:
+                if int(iterator.score) > int(best.score):
                     best = iterator
                 iterator = iterator.next
-            print("Najwyższy wynik uzyskał:", iterator.name)
+            print("Najwyższy wynik uzyskał:", best.name)
 
     def printListBeg(self):
+        """
+        Drukuje liste od początku
+        """
         n = self.head
         for x in range(self.size):
             print(n.name, ":", n.score)
             n = n.next
     def printListEnd(self):
+        """
+        Drukuje liste od końca
+        """
         n = self.tail
         for x in range(self.size):
             print(n.name, ":", n.score)
             n = n.prev
 
+'''
+TEST
+tutaj są nasze testy, dodaję na początek kilka elementów
+potem dodaję ajko ostatnie
+następnie dodaję na Ntą pozycję, używając złego indeksu, pierwszy element, oraz ostatni element, oraz w środku
+na koniec usuwam pierwszy i ostatni
 
+drukuję od początku, oraz od końca
+
+drukuję najlepszego studenta
+'''
 kolos = BidirectionalList()
-kolos.addBeg("Jan Kowalski", 15)
-kolos.addBeg("Tomasz Nowak", 11)
-kolos.addBeg("Bogdan Bednarski", 22)
-kolos.addLast("Krzysztof Kluza", 28)
-kolos.addLast("Januz Miller", 29)
+kolos.addLast("Jan Kowalski", 15)
+kolos.addLast("Tomasz Nowak", 11)
+kolos.addLast("Bogdan Bednarski", 22)
+kolos.addBeg("Krzysztof Kluza", 28)
+kolos.addBeg("Januz Miller", 29)
 kolos.addN("Maciej Kot", 27, 22)
-kolos.addN("Krystian Karczyński", 3, 6)
-kolos.addN("Jakub Porzycki", 23, 1)
-kolos.addN("Patryk Papiór", 9, 3)
-kolos.addN("Kazimierz Wielki", 4, 2)
-kolos.addN("Kazimierz Stary", 4, 8)
-kolos.removeLast()
-kolos.removeBeg()
+kolos.addN("Krystian Karczyński", 60, 6)
+kolos.addN("Jakub Kozioł", 23, 1)
+kolos.addN("Patryk Papiór", 19, 3)
+kolos.removeLast() #usuwa Karczynskiego
+kolos.removeBeg() #usuwa Kozioła
 
 kolos.printListBeg()
-print("----------------")
+print("-----------------------------------------------------")
 kolos.printListEnd()
-
+print("-----------------------------------------------------")
 kolos.findBest()
