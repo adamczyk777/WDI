@@ -1,4 +1,5 @@
 """
+Created by Jakub Adamczyk
 Indeksowanie elementóœ zaczyna się tak jakby od numeru 1, używane przyd odawaniu na ntej pozycji
 """
 
