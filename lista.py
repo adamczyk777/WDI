@@ -30,6 +30,7 @@ class BidirectionalList:
             tmp = self.head #zachowujemy co jest wskazywane przez głowę listy
             self.head = node # wczucamy w głowę nowy el
             node.next = tmp #dodajemy wskaznik na to co bylo wczesniej jako pierwszy element w anszym nowym
+            tmp.prev = node
         self.size += 1
 
     def removeBeg(self):
@@ -58,6 +59,7 @@ class BidirectionalList:
             tmp = self.tail
             self.tail = node
             node.prev = tmp
+            tmp.next = node
         self.size += 1
 
     def removeLast(self):
@@ -83,18 +85,21 @@ class BidirectionalList:
         :param n: enty element
         :return:
         """
-        if 0 < n <= self.size + 1:
-            if n == self.size + 1:
+        if 0 < n <= (self.size + 1):
+            if n == (self.size + 1):
                 self.addLast(name, score)
             elif n == 1:
                 self.addBeg(name, score)
             elif n > (self.size+1)/2:
                 node = Node(name, score)
                 tmp = self.tail
-                for x in range(self.size - n):
+                for x in range(self.size-n-1):
                     tmp = tmp.prev
                 node.prev = tmp.prev
                 node.next = tmp
+                tmp.prev.next = node
+                tmp.prev = node
+                self.size += 1
             else:
                 node = Node(name, score)
                 tmp = self.head
@@ -102,7 +107,9 @@ class BidirectionalList:
                     tmp = tmp.next
                 node.prev = tmp.prev
                 node.next = tmp
-            self.size += 1
+                tmp.prev.next = node
+                tmp.prev = node
+                self.size += 1
 
     def findBest(self):
         if self.size > 0:
@@ -116,12 +123,12 @@ class BidirectionalList:
 
     def printListBeg(self):
         n = self.head
-        for x in range(self.size-1):
+        for x in range(self.size):
             print(n.name, ":", n.score)
             n = n.next
     def printListEnd(self):
         n = self.tail
-        for x in range(self.size-1):
+        for x in range(self.size):
             print(n.name, ":", n.score)
             n = n.prev
 
@@ -132,10 +139,17 @@ kolos.addBeg("Tomasz Nowak", 11)
 kolos.addBeg("Bogdan Bednarski", 22)
 kolos.addLast("Krzysztof Kluza", 28)
 kolos.addLast("Januz Miller", 29)
-# kolos.addN("Maciej Kot", 27, 22)
-# kolos.addN("Krystian Karczyński", 3, 6)
-# kolos.addN("Jakub Porzycki", 23, 1)
-# kolos.addN("Patryk Papiór", 9, 3)
+kolos.addN("Maciej Kot", 27, 22)
+kolos.addN("Krystian Karczyński", 3, 6)
+kolos.addN("Jakub Porzycki", 23, 1)
+kolos.addN("Patryk Papiór", 9, 3)
+kolos.addN("Kazimierz Wielki", 4, 2)
+kolos.addN("Kazimierz Stary", 4, 8)
+kolos.removeLast()
+kolos.removeBeg()
 
 kolos.printListBeg()
-# kolos.printListEnd()
+print("----------------")
+kolos.printListEnd()
+
+kolos.findBest()
