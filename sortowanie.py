@@ -58,20 +58,24 @@ def heap_sort(lst):
 
 
 def quick_sort(arr):
+
+    less = []
+    equal = []
+    bigger = []
+
     if len(arr) > 1:
-        left = 0
-        right = len(arr) - 1
-        pivot = arr[(right + 1) // 2]
-        while left < right:
-            while arr[left] < pivot:
-                left += 1
-            while arr[right] > pivot:
-                right -= 1
-            if left < right:
-                arr[left], arr[right] = arr[right], arr[left]
-                right -= 1
-                left += 1
-        return quick_sort(arr[:right]), quick_sort(arr[left:])
+        pivot = arr[len(arr) // 2]
+        for x in arr:
+            if x < pivot:
+                less.append(x)
+            elif x == pivot:
+                equal.append(x)
+            elif x > pivot:
+                bigger.append(x)
+
+        return quick_sort(less) + equal + quick_sort(bigger)
+    else:
+        return arr
 
 
 for n in range(100):
